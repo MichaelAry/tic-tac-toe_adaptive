@@ -1,0 +1,48 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  font-family: sans-serif;
+  background: #fafafa;
+}
+
+#gameBoard {
+  display: grid;
+  width: 90vmin;
+  height: 90vmin;
+  border: 2px solid #333;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
+
+.cell {
+  background-color: #f0f0f0;
+  border: 0.3px solid #444;
+  aspect-ratio: 1/1;
+  font-size: calc((90vmin / var(--field-size)) * 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.control-panel {
+  text-align: center;
+}
+
+input {
+  padding: 5px;
+  font-size: 1rem;
+  width: 60px;
+  text-align: center;
+  margin-top: 5px;
+}
+
+button {
+  padding: 5px 10px;
+  font-size: 1rem;
+  margin-top: 10px;
+  cursor: pointer;
+}
