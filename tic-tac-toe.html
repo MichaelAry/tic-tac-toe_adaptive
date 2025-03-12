@@ -7,13 +7,16 @@
     <title>крестики-нолики</title>
   </head>
   <body>
-    <h1>крестики-нолики</h1>
-    <div id="gameBoard"></div>
+    <p>крестики-нолики</p>
+    <div id="field"></div>
     <div class="control-panel">
-      <p>Введите размер поля</p>
+      <p>введите размер поля</p>
       <input type="number" id="fieldSizeInput" value="3" />
-      <button id="generateField" onclick="generateField()">создать поле</button>
+      <p>ячеек для выигрыша</p>
+      <input type="number" id="cellsToWinInput" value="3" />
     </div>
+    <button id="generateField" onclick="generateField()">создать поле</button>
+    <script src="fieldRend.js"></script>
     <script src="gameEngine.js"></script>
   </body>
 </html>

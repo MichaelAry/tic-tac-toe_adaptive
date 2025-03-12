@@ -1,49 +1,33 @@
-let currentPlayer = "X";
-let gameBoard = [];
-let boardSize = 3;
+function displayField() {
+  const gameField = document.getElementById("field");
+  gameField.innerHTML = "";
+  gameField.style.gridTemplateColumns =
+    gameField.style.gridTemplateRows = `repeat(${fieldSize}, 1fr)`;
+  gameField.style.display = "grid";
 
-function generateField() {
-  const fieldSizeInput = document.getElementById("fieldSizeInput");
-  boardSize = parseInt(fieldSizeInput.value);
-  gameBoard = Array(boardSize)
-    .fill(null)
-    .map(() => Array(boardSize).fill(""));
-  document.documentElement.style.setProperty("--field-size", boardSize);
-  renderBoard();
-}
-
-function renderBoard() {
-  const gameBoardDiv = document.getElementById("gameBoard");
-  gameBoardDiv.innerHTML = "";
-  gameBoardDiv.style.gridTemplateColumns = `repeat(${boardSize}, 1fr)`;
-  gameBoardDiv.style.gridTemplateRows = `repeat(${boardSize}, 1fr)`;
-  gameBoardDiv.style.display = "grid";
-
-  gameBoard.forEach((row, rowIndex) => {
-    row.forEach((cell, colIndex) => {
-      const cellDiv = document.createElement("div");
-      cellDiv.classList.add("cell");
-      cellDiv.textContent = cell;
-      cellDiv.addEventListener("click", () =>
-        handleCellClick(rowIndex, colIndex)
-      );
-      gameBoardDiv.appendChild(cellDiv);
+  gameField.forEach((row, rowInd) => {
+    row.forEach((cell, colInd) => {
+      const fieldCell = document.createElement("div");
+      fieldCell.classList.add("cell");
+      fieldCell.textContent = cell;
+      fieldCell.addEventListener("click", () => processClick(rowInd, colInd));
+      gameField.appendChild(fieldCell);
     });
   });
 }
 
-function handleCellClick(rowIndex, colIndex) {
-  if (gameBoard[rowIndex][colIndex] === "") {
-    gameBoard[rowIndex][colIndex] = currentPlayer;
+function processClick(rowInd, colInd) {
+  if (gameField[rowInd][colInd] === "") {
+    gameField[rowInd][colInd] = curPl;
     if (checkWin()) {
-      alert(`${currentPlayer} wins!`);
+      alert(`${curPl} побеждает`);
       resetGame();
-    } else if (isBoardFull()) {
-      alert("It's a draw!");
+    } else if (isBFull()) {
+      alert("ничья");
       resetGame();
     } else {
-      currentPlayer = currentPlayer === "X" ? "O" : "X";
-      renderBoard();
+      curPl = curPl === "X" ? "O" : "X";
+      displayField();
     }
   }
 }
@@ -51,42 +35,36 @@ function handleCellClick(rowIndex, colIndex) {
 function checkWin() {
   let win = false;
 
-  gameBoard.forEach((row) => {
-    if (row.every((cell) => cell === currentPlayer)) {
+  gameField.forEach((row) => {
+    if (row.every((cell) => cell === curPl)) {
       win = true;
     }
   });
 
-  gameBoard[0].forEach((_, colIndex) => {
-    if (gameBoard.every((row) => row[colIndex] === currentPlayer)) {
+  gameField[0].forEach((_, colInd) => {
+    if (gameField.every((row) => row[colInd] === curPl)) {
       win = true;
     }
   });
 
-  if (gameBoard.every((row, index) => row[index] === currentPlayer)) {
+  if (gameField.every((row, Ind) => row[Ind] === curPl)) {
     win = true;
   }
-  if (
-    gameBoard.every(
-      (row, index) => row[boardSize - 1 - index] === currentPlayer
-    )
-  ) {
+  if (gameField.every((row, Ind) => row[fieldSize - 1 - Ind] === curPl)) {
     win = true;
   }
 
   return win;
 }
 
-function isBoardFull() {
-  return gameBoard.every((row) => row.every((cell) => cell !== ""));
+function isBFull() {
+  return gameField.every((row) => row.every((cell) => cell !== ""));
 }
 
 function resetGame() {
-  gameBoard = Array(boardSize)
+  gameField = Array(fieldSize)
     .fill(null)
-    .map(() => Array(boardSize).fill(""));
-  currentPlayer = "X";
-  renderBoard();
+    .map(() => Array(fieldSize).fill(""));
+  curPl = "X";
+  displayField();
 }
-
-generateField();
