@@ -1,7 +1,7 @@
 let curPl = "X";
 let gameField = [];
-let fieldSize = 3;
-let cellsToWin = 3;
+let fieldSize = 4;
+let cellsToWin = 4;
 let step = 0;
 
 function generateField() {
