@@ -1,9 +1,9 @@
 function displayField() {
-  const gameField = document.getElementById("field");
-  gameField.innerHTML = "";
-  gameField.style.gridTemplateColumns =
-    gameField.style.gridTemplateRows = `repeat(${fieldSize}, 1fr)`;
-  gameField.style.display = "grid";
+  const gameFieldElement = document.getElementById("field");
+  gameFieldElement.innerHTML = "";
+  gameFieldElement.style.gridTemplateColumns = `repeat(${fieldSize}, 1fr)`;
+  gameFieldElement.style.gridTemplateRows = `repeat(${fieldSize}, 1fr)`;
+  gameFieldElement.style.display = "grid";
 
   gameField.forEach((row, rowInd) => {
     row.forEach((cell, colInd) => {
@@ -11,7 +11,7 @@ function displayField() {
       fieldCell.classList.add("cell");
       fieldCell.textContent = cell;
       fieldCell.addEventListener("click", () => processClick(rowInd, colInd));
-      gameField.appendChild(fieldCell);
+      gameFieldElement.appendChild(fieldCell);
     });
   });
 }
@@ -35,18 +35,21 @@ function processClick(rowInd, colInd) {
 function checkWin() {
   let win = false;
 
+  // Check rows
   gameField.forEach((row) => {
     if (row.every((cell) => cell === curPl)) {
       win = true;
     }
   });
 
-  gameField[0].forEach((_, colInd) => {
+  // Check columns
+  for (let colInd = 0; colInd < fieldSize; colInd++) {
     if (gameField.every((row) => row[colInd] === curPl)) {
       win = true;
     }
-  });
+  }
 
+  // Check diagonals
   if (gameField.every((row, Ind) => row[Ind] === curPl)) {
     win = true;
   }
@@ -68,3 +71,8 @@ function resetGame() {
   curPl = "X";
   displayField();
 }
+
+// Initialize the game field on page load
+document.addEventListener("DOMContentLoaded", () => {
+  displayField();
+});

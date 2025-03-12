@@ -1,10 +1,9 @@
 let curPl = "X";
 let gameField = [];
 let fieldSize = 3;
-let cellsToWin = 3;
+
 
 function generateField() {
-  cellsToWin = parseInt(document.getElementById("cellsToWinInput").value);
   fieldSize = parseInt(document.getElementById("fieldSizeInput").value);
   gameField = Array(fieldSize)
     .fill("")
