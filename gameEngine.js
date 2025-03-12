@@ -35,21 +35,18 @@ function processClick(rowInd, colInd) {
 function checkWin() {
   let win = false;
 
-  // Check rows
   gameField.forEach((row) => {
     if (row.every((cell) => cell === curPl)) {
       win = true;
     }
   });
 
-  // Check columns
   for (let colInd = 0; colInd < fieldSize; colInd++) {
     if (gameField.every((row) => row[colInd] === curPl)) {
       win = true;
     }
   }
 
-  // Check diagonals
   if (gameField.every((row, Ind) => row[Ind] === curPl)) {
     win = true;
   }
@@ -71,8 +68,3 @@ function resetGame() {
   curPl = "X";
   displayField();
 }
-
-// Initialize the game field on page load
-document.addEventListener("DOMContentLoaded", () => {
-  displayField();
-});
