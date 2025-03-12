@@ -34,7 +34,9 @@ function processClick(rowInd, colInd) {
 
 function checkWin() {
   let win = false;
-
+  step++;
+  plTurn.innerHTML = `ходит игрок: ${curPl === "X" ? "O" : "X"}`;
+  turns.innerHTML = `ход: ${step}`;
   gameField.forEach((row) => {
     if (row.every((cell) => cell === curPl)) {
       win = true;
