@@ -2,7 +2,7 @@ let curPl = "X";
 let gameField = [];
 let fieldSize = 4;
 let cellsToWin = 4;
-let step = 0;
+let step = 1;
 
 function generateField() {
   fieldSize = parseInt(document.getElementById("fieldSizeInput").value);
@@ -12,6 +12,9 @@ function generateField() {
     .map(() => Array(fieldSize).fill(""));
   document.documentElement.style.setProperty("--field-size", fieldSize);
   displayField();
+  document.getElementById("field").style.display = "grid";
+  document.getElementById("generateFieldButton").style.display = "none"; 
+  document.getElementById("controlPanel").style.display = "none";
 }
 
 function displayField() {
@@ -19,7 +22,6 @@ function displayField() {
   gridField.innerHTML = "";
   gridField.style.gridTemplateColumns =
     gridField.style.gridTemplateRows = `repeat(${fieldSize}, 1fr)`;
-  gridField.style.display = "grid";
 
   gameField.forEach((row, rowInd) => {
     row.forEach((cell, colInd) => {
@@ -31,5 +33,3 @@ function displayField() {
     });
   });
 }
-
-generateField();

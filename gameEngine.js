@@ -1,32 +1,17 @@
 let cellsTowWinChecker = [];
 
-function displayField() {
-  const gameFieldElement = document.getElementById("field");
-  gameFieldElement.innerHTML = "";
-  gameFieldElement.style.gridTemplateColumns = `repeat(${fieldSize}, 1fr)`;
-  gameFieldElement.style.gridTemplateRows = `repeat(${fieldSize}, 1fr)`;
-  gameFieldElement.style.display = "grid";
-
-  gameField.forEach((row, rowInd) => {
-    row.forEach((cell, colInd) => {
-      const fieldCell = document.createElement("div");
-      fieldCell.classList.add("cell");
-      fieldCell.textContent = cell;
-      fieldCell.addEventListener("click", () => processClick(rowInd, colInd));
-      gameFieldElement.appendChild(fieldCell);
-    });
-  });
-}
-
 function processClick(rowInd, colInd) {
+  step++;
+  document.getElementById("plTurn").innerHTML = `ходит игрок: ${
+    curPl === "X" ? "O" : "X"
+  }`;
+  document.getElementById("turns").innerHTML = `ход: ${step}`;
   if (gameField[rowInd][colInd] === "") {
     gameField[rowInd][colInd] = curPl;
     if (checkWin()) {
-      alert(`${curPl} побеждает`);
-      resetGame();
+      showWinnerMessage(curPl, step);
     } else if (isBFull()) {
-      alert("ничья");
-      resetGame();
+      drawMessage();
     } else {
       curPl = curPl === "X" ? "O" : "X";
       displayField();
@@ -36,47 +21,71 @@ function processClick(rowInd, colInd) {
 
 function checkWin() {
   let win = false;
-  step++;
-  cellsTowWinChecker = Array(cellsToWin);
-  cellsTowWinChecker.fill("");
-  plTurn.innerHTML = `ходит игрок: ${curPl === "X" ? "O" : "X"}`;
-  turns.innerHTML = `ход: ${step}`;
 
-  gameField.forEach((row, tmpCellInd) => {
-    if (row[tmpCellInd] === curPl) {
-      cellsTowWinChecker[tmpCellInd] = curPl;
-    } else {
-      cellsTowWinChecker.fill("");
+  for (let row = 0; row < fieldSize; row++) {
+    for (let col = 0; col <= fieldSize - cellsToWin; col++) {
+      if (
+        gameField[row]
+          .slice(col, col + cellsToWin)
+          .every((cell) => cell === curPl)
+      ) {
+        win = true;
+      }
     }
-    if (cellsTowWinChecker.every((cell) => cell === curPl)) {
-      win = true;
-    }
-    /*if (row.every((cell) => cell === curPl)) {
-      win = true;
-    }*/
-  });
- gameField.forEach((row) => {
-   row.forEach((cell, tmpCellInd) => {
-     if (cell === curPl) {
-       cellsTowWinChecker[tmpCellInd] = curPl;
-     } else {
-       cellsTowWinChecker.fill("");
-     }
-
-   });
-   if (cellsTowWinChecker.every((cell) => cell === curPl)) {
-     win = true;
-   }
- });
-
-  if (gameField.every((row, Ind) => row[Ind] === curPl)) {
-    win = true;
   }
-  if (gameField.every((row, Ind) => row[fieldSize - 1 - Ind] === curPl)) {
-    win = true;
+
+  for (let col = 0; col < fieldSize; col++) {
+    for (let row = 0; row <= fieldSize - cellsToWin; row++) {
+      let columnSegment = [];
+      for (let k = 0; k < cellsToWin; k++) {
+        columnSegment.push(gameField[row + k][col]);
+      }
+      if (columnSegment.every((cell) => cell === curPl)) {
+        win = true;
+      }
+    }
+  }
+
+  for (let row = 0; row <= fieldSize - cellsToWin; row++) {
+    for (let col = 0; col <= fieldSize - cellsToWin; col++) {
+      let diag1 = [],
+        diag2 = [];
+      for (let k = 0; k < cellsToWin; k++) {
+        diag1.push(gameField[row + k][col + k]);
+        diag2.push(gameField[row + k][col + cellsToWin - 1 - k]);
+      }
+      if (
+        diag1.every((cell) => cell === curPl) ||
+        diag2.every((cell) => cell === curPl)
+      ) {
+        win = true;
+      }
+    }
   }
 
   return win;
+}
+
+function showWinnerMessage(winner, turn) {
+  const winnerMessage = document.createElement("div");
+  winnerMessage.id = "winnerMessage";
+  winnerMessage.textContent = `${winner} побеждает на ходу ${turn}`;
+  document.body.appendChild(winnerMessage);
+  document.getElementById("field").style.display = "none";
+  document.getElementById("plTurn").innerHTML = ``;
+  document.getElementById("turns").innerHTML = ``;
+  document.getElementById("generateFieldButton").style.display = "none";
+}
+
+function drawMessage() {
+  const winnerMessage = document.createElement("div");
+  winnerMessage.id = "winnerMessage";
+  winnerMessage.textContent = `ничья`;
+  document.body.appendChild(winnerMessage);
+  document.getElementById("field").style.display = "none";
+  document.getElementById("plTurn").innerHTML = ``;
+  document.getElementById("turns").innerHTML = ``;
+  document.getElementById("generateFieldButton").style.display = "none";
 }
 
 function isBFull() {
@@ -84,12 +93,21 @@ function isBFull() {
 }
 
 function resetGame() {
+  document.getElementById("plTurn").innerHTML = ``;
+  document.getElementById("turns").innerHTML = ``;
+  fieldSize = 4;
+  cellsToWin = 4;
   gameField = Array(fieldSize)
     .fill(null)
     .map(() => Array(fieldSize).fill(""));
-  plTurn.innerHTML = `ходит игрок: ${curPl === "X" ? "O" : "X"}`;
-  turns.innerHTML = `ход: ${step}`;
   curPl = "X";
   displayField();
-  let step = 0;
+  step = 0;
+  const winnerMessage = document.getElementById("winnerMessage");
+  if (winnerMessage) {
+    winnerMessage.remove();
+  }
+  document.getElementById("field").style.display = "none";
+  document.getElementById("generateFieldButton").style.display = "block";
+  document.getElementById("controlPanel").style.display = "block";
 }

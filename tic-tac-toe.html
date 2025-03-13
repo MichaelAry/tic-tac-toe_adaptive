@@ -9,15 +9,19 @@
   <body>
     <p>крестики-нолики</p>
     <div id="field"></div>
-    <div class="control-panel">
+    <div class="controlPanel" id="controlPanel">
       <p>введите размер поля</p>
       <input type="number" id="fieldSizeInput" value="4" />
       <p>ячеек для выигрыша</p>
       <input type="number" id="cellsToWinInput" value="4" />
     </div>
-    <button id="generateField" onclick="generateField()">создать поле</button>
+    <button id="generateFieldButton" onclick="generateField()">
+      создать поле
+    </button>
+    <button id="resetGame" onclick="resetGame()">перезапустить игру</button>
     <p id="plTurn"></p>
     <p id="turns"></p>
+    <p id="resultMessage"></p>
     <script src="fieldRend.js"></script>
     <script src="gameEngine.js"></script>
   </body>
