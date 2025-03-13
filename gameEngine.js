@@ -42,8 +42,6 @@ function checkWin() {
   plTurn.innerHTML = `ходит игрок: ${curPl === "X" ? "O" : "X"}`;
   turns.innerHTML = `ход: ${step}`;
 
-
-//диагональ
   gameField.forEach((row, tmpCellInd) => {
     if (row[tmpCellInd] === curPl) {
       cellsTowWinChecker[tmpCellInd] = curPl;
@@ -53,20 +51,30 @@ function checkWin() {
     if (cellsTowWinChecker.every((cell) => cell === curPl)) {
       win = true;
     }
+    /*if (row.every((cell) => cell === curPl)) {
+      win = true;
+    }*/
   });
+ gameField.forEach((row) => {
+   row.forEach((cell, tmpCellInd) => {
+     if (cell === curPl) {
+       cellsTowWinChecker[tmpCellInd] = curPl;
+     } else {
+       cellsTowWinChecker.fill("");
+     }
 
-// for (let colInd = 0; colInd < fieldSize; colInd++) {
-//   if (gameField.every((row) => row[colInd] === curPl)) {
-//     win = true;
-//   }
-// }
-//
-// if (gameField.every((row, Ind) => row[Ind] === curPl)) {
-//   win = true;
-// }
-// if (gameField.every((row, Ind) => row[fieldSize - 1 - Ind] === curPl)) {
-//   win = true;
-// }
+   });
+   if (cellsTowWinChecker.every((cell) => cell === curPl)) {
+     win = true;
+   }
+ });
+
+  if (gameField.every((row, Ind) => row[Ind] === curPl)) {
+    win = true;
+  }
+  if (gameField.every((row, Ind) => row[fieldSize - 1 - Ind] === curPl)) {
+    win = true;
+  }
 
   return win;
 }
