@@ -2,19 +2,23 @@ let curPl = "X";
 let gameField = [];
 let fieldSize = 4;
 let cellsToWin = 4;
+let step = 1;
+let cellsTowWinChecker = [];
 document.getElementById("field").style.display = "none";
 
 function generateField() {
   fieldSize = parseInt(document.getElementById("fieldSizeInput").value);
   cellsToWin = parseInt(document.getElementById("cellsToWinInput").value);
   if (fieldSize < cellsToWin) {
-    const alertMessage = document.createElement("div");
+    let alertMessage = document.getElementById("alertMessage");
+    alertMessage = document.createElement("div");
     alertMessage.id = "alertMessage";
     document.body.appendChild(alertMessage);
     alertMessage.textContent = `размер поля должен быть >= количества ячеек, требуемых для выигрыша`;
     return;
   }
-  if (alertMessage) alertMessage.remove();
+  const existingAlertMessage = document.getElementById("alertMessage");
+  if (existingAlertMessage) existingAlertMessage.remove();
   gameField = Array(fieldSize)
     .fill("")
     .map(() => Array(fieldSize).fill(""));

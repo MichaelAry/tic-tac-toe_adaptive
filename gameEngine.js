@@ -1,21 +1,19 @@
-let cellsTowWinChecker = [];
-let step = 1;
-
 function processClick(rowInd, colInd) {
-  document.getElementById("plTurn").innerHTML = `ходит игрок: ${
-    curPl === "X" ? "O" : "X"
-  }`;
-  document.getElementById("turns").innerHTML = `ход: ${step + 1}`;
-
   if (gameField[rowInd][colInd] === "") {
     gameField[rowInd][colInd] = curPl;
     step++;
+    document.getElementById("plTurn").innerHTML = `ходит игрок: ${
+      curPl === "X" ? "O" : "X"
+    }`;
+    document.getElementById("turns").innerHTML = `ход: ${step}`;
 
     if (checkWin()) {
       endGameShortage();
+      const winnerMessage = document.getElementById("winnerMessage");
       winnerMessage.textContent = `${curPl} побеждает на ходу ${step - 1}`;
     } else if (gameField.every((row) => row.every((cell) => cell !== ""))) {
       endGameShortage();
+      const winnerMessage = document.getElementById("winnerMessage");
       winnerMessage.textContent = `ничья`;
     } else {
       curPl = curPl === "X" ? "O" : "X";
@@ -84,9 +82,12 @@ function checkWin() {
 }
 
 function endGameShortage() {
-  const winnerMessage = document.createElement("div");
-  winnerMessage.id = "winnerMessage";
-  document.body.appendChild(winnerMessage);
+  let winnerMessage = document.getElementById("winnerMessage");
+  if (!winnerMessage) {
+    winnerMessage = document.createElement("div");
+    winnerMessage.id = "winnerMessage";
+    document.body.appendChild(winnerMessage);
+  }
   document.getElementById("field").style.display = "none";
   document.getElementById("plTurn").innerHTML = ``;
   document.getElementById("turns").innerHTML = ``;
