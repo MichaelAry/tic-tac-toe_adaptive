@@ -2,8 +2,6 @@ let curPl = "X";
 let gameField = [];
 let fieldSize = 4;
 let cellsToWin = 4;
-let step = 1;
-
 function generateField() {
   fieldSize = parseInt(document.getElementById("fieldSizeInput").value);
   cellsToWin = parseInt(document.getElementById("cellsToWinInput").value);
@@ -13,8 +11,10 @@ function generateField() {
   document.documentElement.style.setProperty("--field-size", fieldSize);
   displayField();
   document.getElementById("field").style.display = "grid";
-  document.getElementById("generateFieldButton").style.display = "none"; 
+  document.getElementById("generateFieldButton").style.display = "none";
   document.getElementById("controlPanel").style.display = "none";
+  document.getElementById("plTurn").innerHTML = `ходит игрок: X`;
+  document.getElementById("turns").innerHTML = `ход: ${step}`;
 }
 
 function displayField() {
