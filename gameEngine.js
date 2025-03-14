@@ -1,29 +1,31 @@
 function processClick(rowInd, colInd) {
   if (gameField[rowInd][colInd] === "") {
-    gameField[rowInd][colInd] = curPl;
+    gameField[rowInd][colInd] = players[curPlIndex];
     step++;
-    document.getElementById("plTurn").innerHTML = `ходит игрок: ${
-      curPl === "X" ? "O" : "X"
-    }`;
-    document.getElementById("turns").innerHTML = `ход: ${step}`;
-
     if (checkWin()) {
       endGameShortage();
       const winnerMessage = document.getElementById("winnerMessage");
-      winnerMessage.textContent = `${curPl} побеждает на ходу ${step - 1}`;
+      winnerMessage.textContent = `${players[curPlIndex]} побеждает на ходу ${
+        step - 1
+      }`;
     } else if (gameField.every((row) => row.every((cell) => cell !== ""))) {
       endGameShortage();
       const winnerMessage = document.getElementById("winnerMessage");
       winnerMessage.textContent = `ничья`;
     } else {
-      curPl = curPl === "X" ? "O" : "X";
+      curPlIndex = (curPlIndex + 1) % players.length;
+      document.getElementById(
+        "plTurn"
+      ).innerHTML = `ходит игрок: ${players[curPlIndex]}`;
+      document.getElementById("turns").innerHTML = `ход: ${step}`;
       displayField();
     }
   }
 }
 
 function checkWin() {
-  const checkLine = (line) => line.every((cell) => cell === curPl);
+  const checkLine = (line) =>
+    line.every((cell) => cell === players[curPlIndex]);
 
   let win = false;
 
@@ -102,7 +104,8 @@ function resetGame() {
   gameField = Array.from({ length: fieldSize }, () =>
     Array(fieldSize).fill("")
   );
-  curPl = "X";
+  curPlIndex = 0;
+  players = [];
   displayField();
   step = 1;
   const winnerMessage = document.getElementById("winnerMessage");
