@@ -1,5 +1,6 @@
 let cellsTowWinChecker = [];
 let step = 1;
+
 function processClick(rowInd, colInd) {
   document.getElementById("plTurn").innerHTML = `ходит игрок: ${
     curPl === "X" ? "O" : "X"
@@ -13,7 +14,7 @@ function processClick(rowInd, colInd) {
     if (checkWin()) {
       endGameShortage();
       winnerMessage.textContent = `${curPl} побеждает на ходу ${step - 1}`;
-    } else if (isBFull()) {
+    } else if (gameField.every((row) => row.every((cell) => cell !== ""))) {
       endGameShortage();
       winnerMessage.textContent = `ничья`;
     } else {
@@ -90,10 +91,6 @@ function endGameShortage() {
   document.getElementById("plTurn").innerHTML = ``;
   document.getElementById("turns").innerHTML = ``;
   document.getElementById("generateFieldButton").style.display = "none";
-}
-
-function isBFull() {
-  return gameField.every((row) => row.every((cell) => cell !== ""));
 }
 
 function resetGame() {

@@ -3,8 +3,18 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-family: sans-serif;
-  background: #fafafa;
+  font-family: "Arial", sans-serif;
+  background: linear-gradient(135deg, #f5f7fa, #d8cad8);
+  height: 100vh;
+  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+p {
+  font-size: 1.2rem;
+  color: #333;
+  margin: 10px 0;
 }
 
 #field {
@@ -12,41 +22,97 @@ body {
   width: 80vmin;
   height: 80vmin;
   border: 2px solid #535252;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
 }
 
 .cell {
-  background-color: #f0f0f0;
-  border: 0.3px solid #444;
+  background-color: #eeeaea;
+  border: 1px solid #1a0606;
   aspect-ratio: 1/1;
   font-size: calc((90vmin / var(--field-size)) * 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.cell:hover {
+  background-color: #bb9595;
+  transform: scale(1.05);
 }
 
 .controlPanel {
   text-align: center;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
 }
 
 input {
-  padding: 5px;
+  padding: 10px;
   font-size: 1rem;
-  width: 50px;
+  width: 60px;
   text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin: 5px 0;
 }
 
 button {
-  padding: 5px 10px;
+  padding: 10px 20px;
   font-size: 1rem;
   margin-top: 10px;
   cursor: pointer;
+  background: #d38c63;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.3s, transform 0.3s;
 }
 
-#field {
-  display: none;
+button:hover {
+  background-color: #724818;
+  transform: scale(1.05);
 }
 
-#winnerMessage {
+#plTurn,
+#turns,
+#resultMessage {
+  font-size: 1.2rem;
+  color: #333;
+  margin: 10px 0;
+}
+
+#winnerMessage,
+#alertMessage {
   font-size: 4vw;
+  color: #d9534f;
+  font-weight: bold;
+}
+
+@media (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+
+  #field {
+    width: 90vmin;
+    height: 90vmin;
+  }
+
+  .controlPanel {
+    padding: 10px;
+  }
+
+  input {
+    width: 50px;
+  }
+
+  button {
+    padding: 8px 16px;
+  }
 }
