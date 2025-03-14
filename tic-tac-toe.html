@@ -11,11 +11,11 @@
     <div id="field"></div>
     <div class="controlPanel" id="controlPanel">
       <p>введите размер поля</p>
-      <input type="number" id="fieldSizeInput" value="4" min="3" />
+      <input type="number" id="fieldSizeInput" value="4" min="3" max="100" />
       <p>ячеек для выигрыша</p>
-      <input type="number" id="cellsToWinInput" value="4" min="3" />
+      <input type="number" id="cellsToWinInput" value="4" min="3" max="100" />
       <p>количество игроков</p>
-      <input type="number" id="numPlayersInput" value="2" min="2" />
+      <input type="number" id="numPlayersInput" value="2" min="2" max="10" />
     </div>
     <button id="generateFieldButton" onclick="generateField()">
       создать поле

@@ -44,12 +44,14 @@ function generateRandomSymbols(numPlayers) {
   let selectedSymbols = [];
   Array(numPlayers)
     .fill()
-    .forEach(() => {
+    .forEach(function generation() {
       let randomSymbol;
-      do {
-        randomSymbol = String.fromCharCode(Math.floor(Math.random() * 95) + 32);
-      } while (selectedSymbols.includes(randomSymbol));
-      selectedSymbols.push(randomSymbol);
+      randomSymbol = String.fromCharCode(Math.floor(Math.random() * 95) + 32);
+      if (!selectedSymbols.includes(randomSymbol)) {
+        selectedSymbols.push(randomSymbol);
+      } else {
+        generation();
+      }
     });
   return selectedSymbols;
 }
